@@ -1,13 +1,16 @@
 {
   "dependencies": {
-    "pnpm": "^9.11.0"
+    "date-fns": "^4.1.0",
+    "nodemon": "^3.1.7",
+    "pnpm": "^9.11.0",
+    "uuid": "^10.0.0"
   },
   "name": "logevents",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
+  
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
