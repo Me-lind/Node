@@ -54,11 +54,35 @@ function attachButtonListeners() {
         });
     });
 }
+// Function to open the modal with dynamic content
+function openModal(content) {
+    const modal = document.getElementById('modal');
+    const modalBody = document.getElementById('modal-body');
+    modalBody.innerHTML = content; // Insert the provided content
+    modal.style.display = 'block'; // Show the modal
+}
+
+// Function to close the modal
+function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+}
+
+// Event listener for closing the modal
+document.getElementById('close-modal').addEventListener('click', closeModal);
+
+// Close the modal if user clicks outside of the modal content
+window.onclick = function(event) {
+    const modal = document.getElementById('modal');
+    if (event.target == modal) {
+        closeModal();
+    }
+};
+
 function showAddProductForm() {
     document.getElementById('add-product-btn').addEventListener('click', () => {
-        document.getElementById('add-product-form').style.display = 'flex';
+        const addFormHTML = document.getElementById('add-product-form').style.display = 'flex';
+        openModal(addFormHTML)
     });
-
     document.getElementById('add-product-form').addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -71,6 +95,7 @@ function showAddProductForm() {
         };
 
         await addProduct(newProduct);
+        closeModal
         fetchProducts(); // Refresh the product list after adding
         document.getElementById('add-product-form').reset(); // Clear form
     });
@@ -90,40 +115,49 @@ async function addProduct(newProduct) {
 async function viewProduct(productId) {
     const response = await fetch(`http://localhost:3000/api/products/${productId}`);
     const product = await response.json();
-    // Display the product in a modal or popup (you can implement this)
-    alert(JSON.stringify(product)); // Just for testing, replace with actual UI code
+
+    const productDetails = `
+        <h2>${product.name}</h2>
+        <p>${product.description}</p>
+        <p>Price: $${product.price}</p>
+        <p>Category: ${product.category}</p>
+        <p>Stock: ${product.stock}</p>
+    `;
+
+    openModal(productDetails);  // Open the modal with product details
 }
+
 async function showEditForm(productId) {
     const response = await fetch(`http://localhost:3000/api/products/${productId}`);
     const product = await response.json();
 
-    // Dynamically create and display an edit form pre-filled with product data
     const editFormHtml = `
-        <form id="edit-form" >Edit Product 
-            <label>Name</label><input type="text" id="name" value="${product.name}" />
-            <label>Description</label><input type="text" id="description" value="${product.description}" />
-            <label>Price</label><input type="number" id="price" value="${product.price}" />
-            <label>Category</label><input type="text" id="category" value="${product.category}" />
-            <label>Stock</label><input type="number" id="stock" value="${product.stock}" />
+        <form id="edit-form">Edit Product
+            <label>Name</label><input type="text" id="edit-name" value="${product.name}" />
+            <label>Description</label><input type="text" id="edit-description" value="${product.description}" />
+            <label>Price</label><input type="number" id="edit-price" value="${product.price}" />
+            <label>Category</label><input type="text" id="edit-category" value="${product.category}" />
+            <label>Stock</label><input type="number" id="edit-stock" value="${product.stock}" />
             <button type="submit">Save Changes</button>
         </form>
     `;
 
-    document.getElementById('product-list').innerHTML = editFormHtml;
+    openModal(editFormHtml);  // Open the modal with the edit form
 
     document.getElementById('edit-form').addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const updatedProduct = {
-            name: document.getElementById('name').value,
-            description: document.getElementById('description').value,
-            price: parseFloat(document.getElementById('price').value),   
-            category: document.getElementById('category').value,
-            stock: parseInt(document.getElementById('stock').value, 10)        };
+            name: document.getElementById('edit-name').value,
+            description: document.getElementById('edit-description').value,
+            price: parseFloat(document.getElementById('edit-price').value),
+            category: document.getElementById('edit-category').value,
+            stock: parseInt(document.getElementById('edit-stock').value, 10)
+        };
 
         await editProduct(productId, updatedProduct);
-        fetchProducts(); // Refresh the product list after editing
-
+        closeModal();  // Close modal after submitting changes
+        fetchProducts();  // Refresh the product list
     });
 }
 

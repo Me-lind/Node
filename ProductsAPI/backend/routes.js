@@ -94,7 +94,7 @@ const router = async (req, res) => {
             // Read the latest products data from file
             productsListData = readDataFromFile();
 
-            const productIndex = productsListData.findIndex(p => p.id == productId);
+            const productIndex = productsListData.findIndex(p => p.id === productId);
             if (productIndex !== -1) {
                 productsListData[productIndex] = {
                     ...productsListData[productIndex],  // Keep existing data

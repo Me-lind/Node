@@ -1,13 +1,5 @@
 [
   {
-    "id": "002",
-    "name": "Bluetooth Headphones",
-    "description": "Over-ear Bluetooth headphones with noise cancellation.",
-    "price": 89.99,
-    "category": "Electronics",
-    "stock": 75
-  },
-  {
     "id": "003",
     "name": "Ergonomic Office Chair",
     "description": "An ergonomic office chair with adjustable height and lumbar support.",
@@ -19,7 +11,7 @@
     "id": "004",
     "name": "Yoga Mat",
     "description": "A non-slip yoga mat with extra cushioning for comfort.",
-    "price": 24.99,
+    "price": 20.99,
     "category": "Fitness",
     "stock": 100
   },
@@ -32,11 +24,11 @@
     "stock": 200
   },
   {
-    "id": "006",
+    "id": "005",
     "name": "Wireless Mouse Multi colored",
     "description": "A high-precision wireless mouse with adjustable DPI settings. With Multiple color selection.",
-    "price": "15",
+    "price": "30",
     "category": "Electronics",
-    "stock": "50"
+    "stock": "2"
   }
 ]
